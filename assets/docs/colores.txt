@@ -1,0 +1,9 @@
+🔴 Rojo (#D12608): Color principal (botones de acción, énfasis, enlaces activos).
+
+⚫ Negro/Gris Oscuro (#333): Textos y encabezados de tablas.
+
+⚪ Blanco (#FFF): Fondos de tarjetas y modales.
+
+🌫️ Gris Claro (#F4F4F4 y #DDD): Fondos de página y bordes.
+
+

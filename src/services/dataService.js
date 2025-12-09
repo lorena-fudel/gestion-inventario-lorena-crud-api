@@ -1,4 +1,4 @@
-const API_BASE_URL_FILE = 'http://localhost/FuncionesVanillaGestion-inventario-entregable2-dbConnectVanilla/api/index.php'; 
+const API_BASE_URL_FILE = 'http://localhost/sinreadmeFuncionesVanillaGestion-inventario-entregable2-dbConnectVanilla/api/index.php'; 
 
 // Función genérica para manejar todas las peticiones de la API
 const _fetchApi = async (resource, method = 'GET', data = null, id = null) => {

@@ -1,180 +1,85 @@
-/* ========================================= */
-/* ESTILOS DE ALMACÉN                        */
-/* ========================================= */
-
 .container-almacen {
     padding: 20px;
-    max-width: 1400px; /* Un poco más ancho para que quepa todo */
+    max-width: 1400px;
     margin: 0 auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Cabecera de sección */
 .header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 3px solid #6f42c1; /* Morado para diferenciar */
-    padding-bottom: 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
 }
 
 .header-section h1 {
-    margin: 0;
-    color: #333;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    line-height: 1;
 }
 
-/* Contenedor principal de la barra de búsqueda */
-.barra-busqueda {
-    background-color: #ffffff; /* Fondo blanco limpio */
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave para dar profundidad */
+/* Barra de Búsqueda / Filtros */
+.inventory-controls, .barra-busqueda, .filtros-box {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     display: flex;
-    flex-wrap: wrap; /* Para que se adapte a pantallas pequeñas */
-    gap: 20px; /* Espacio entre los elementos */
-    align-items: flex-end; /* Alinea los inputs con el botón abajo */
-    border-left: 5px solid #6f42c1; /* Decoración morada a la izquierda */
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Cada grupo de Label + Input */
-.grupo-filtro {
+.search-group, .grupo-filtro {
     display: flex;
-    flex-direction: column;
-    flex: 1; /* Todos ocupan el mismo ancho disponible */
-    min-width: 150px; /* Ancho mínimo para que no se aplasten */
+    gap: 10px;
+    flex: 1;
 }
 
-/* Estilo de las etiquetas (Labels) */
-.grupo-filtro label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 5px;
-}
-
-/* Estilo de los Inputs y Selects */
-.grupo-filtro input, 
-.grupo-filtro select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-}
-
-/* Efecto al hacer clic en un input */
-.grupo-filtro input:focus, 
-.grupo-filtro select:focus {
-    border-color: #6f42c1; /* Borde morado al escribir */
-    background-color: #fff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(111, 66, 193, 0.2);
-}
-
-/* Botón Limpiar */
-.btn-limpiar {
-    padding: 10px 20px;
-    background-color: #e0e0e0;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-    height: 38px; /* Para igualar altura con los inputs */
-}
-
-.btn-limpiar:hover {
-    background-color: #d6d6d6;
-    color: #000;
-}
-
-/* Ajuste para que el botón no se estire demasiado */
-.boton-area {
-    flex: 0; /* No crece más de lo necesario */
-    min-width: auto;
-}
-
-/* Botón Nuevo Producto */
-.btn-primary {
-    background-color: #6f42c1;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.95rem;
-    transition: background 0.2s;
-}
-.btn-primary:hover { background-color: #5a32a3; }
-
-/* Reutilizamos .filtros-box, .tabla-datos, etc. de los estilos globales
-   Si no los tienes globales, cópialos de albaranes.css */
-
-/* --- Estilos Específicos de la Tabla de Productos --- */
-
-/* Imagen miniatura */
-.img-thumb {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-/* Textos pequeños (Marca, Código) */
-.text-small {
-    display: block;
-    font-size: 0.75rem;
-    color: #888;
-    margin-top: 2px;
-}
-
-/* Badges de Stock */
+/* Badges de Stock (Simplificados) */
 .stock-badge {
-    padding: 4px 8px;
+    padding: 4px 10px;
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    white-space: nowrap;
 }
 
-.stock-badge.ok { background-color: #d4edda; color: #155724; }
-.stock-badge.bajo { background-color: #fff3cd; color: #856404; animation: parpadeo 2s infinite; }
-.stock-badge.agotado { background-color: #f8d7da; color: #721c24; }
+.stock-badge.ok { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+.stock-badge.bajo { background-color: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
+.stock-badge.agotado { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
 
-@keyframes parpadeo {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-
-/* Botones de Acción */
-.acciones-group {
-    display: flex;
-    gap: 5px;
+/* Modal específico de Almacén */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
     justify-content: center;
+    align-items: center;
 }
 
-.btn-icon {
-    padding: 5px 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+.modal-content {
     background: white;
-    cursor: pointer;
-    font-size: 1rem;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
-.btn-icon:hover { background-color: #f1f1f1; }
-.btn-icon.edit { color: #007bff; border-color: #b8daff; }
-.btn-icon.delete { color: #dc3545; border-color: #f5c6cb; }
 
-/* Celda de precio alineada a la derecha */
-.precio-cell {
-    font-family: 'Consolas', monospace;
-    font-weight: bold;
-    color: #333;
+.close-button {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
 }
+.close-button:hover { color: var(--primary-color); }

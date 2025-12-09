@@ -1,70 +1,68 @@
 header {
-    background-color: #fcfbfb; /* Azul oscuro */
-    color: white;
-    padding: 1em;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-card);
+    border-bottom: 3px solid var(--primary-color);
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 header h1 {
-    margin-bottom: 0.5em;
-    font-size: 1.8em;
-    color: #d12608;;
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.logos{
-    height: 60px;
-    margin: 0 10px;
-    vertical-align: middle;
-}
+.logos { height: 50px; }
 
+/* Navegación */
 #main-nav {
+    width: 100%;
+    background-color: #2c2c2c; /* Barra negra */
+    padding: 0;
+    border-radius: 4px;
+}
+
+#main-nav ul {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 0;
-    background-color: #d12608; /* Un tono más oscuro */
-    transition: all 0.3s ease;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.hidden-nav {
-    display: none !important; /* Ocultar por defecto */
+#main-nav a {
+    color: #ccc;
+    padding: 15px 20px;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
 }
 
-.nav-btn {
-    background-color: #5cb85c;
+#main-nav a:hover, #main-nav a.active {
     color: white;
-    border: none;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    background-color: #1a1a1a;
+    text-decoration: none;
+    border-bottom-color: var(--primary-color);
 }
 
-.nav-btn:hover {
-    background-color: #4cae4c;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: absolute;
-    right: 20px;
+/* Botón Salir */
+#main-nav a.logout {
+    background-color: var(--primary-color);
     color: white;
-    font-size: 0.9em;
+    margin-left: auto; /* Empujar a la derecha si usas flex */
 }
+#main-nav a.logout:hover { background-color: var(--primary-hover); }
 
-.user-info #btn-logout {
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    transition: background-color 0.3s;
-}
-
-.user-info #btn-logout:hover {
-    background-color: #ddd;
-}
+.user-info { display: none; } /* Ocultar info usuario extra si no es necesaria */

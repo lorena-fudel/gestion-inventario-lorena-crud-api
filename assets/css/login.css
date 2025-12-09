@@ -1,38 +1,24 @@
 .auth-container {
     max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: var(--bg-card);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid var(--primary-color);
     text-align: center;
 }
 
-.login-form .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
+.auth-container h2 { margin-bottom: 20px; color: var(--primary-color); }
+
+.login-form .form-group { margin-bottom: 20px; }
 
 .error-message {
-    color: #d9534f;
+    background-color: #fdeded;
+    color: var(--primary-color);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
     margin-bottom: 15px;
-    font-weight: bold;
-    display: block;
-}
-
-.login-links {
-    margin-top: 20px;
-}
-
-.login-links a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.login-links a:hover {
-    text-decoration: underline;
-}
-
-.mt-20 {
-    margin-top: 20px;
+    border: 1px solid #f5c6cb;
 }

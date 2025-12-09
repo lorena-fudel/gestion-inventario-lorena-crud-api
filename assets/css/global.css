@@ -1,158 +1,124 @@
-/* --- Estilos Globales (index.css, header.css, footer.css) --- */
+/* ========================================= */
+/* VARIABLES GLOBALES (ROJO - GRIS - NEGRO)  */
+/* ========================================= */
+:root {
+    --primary-color: #D12608;       /* Rojo corporativo */
+    --primary-hover: #a81e06;       /* Rojo oscuro para hover */
+    --text-color: #333333;          /* Negro suave */
+    --text-light: #666666;          /* Gris texto secundario */
+    --bg-body: #f4f4f4;             /* Gris muy claro fondo */
+    --bg-card: #ffffff;             /* Blanco */
+    --border-color: #dddddd;        /* Gris bordes */
+    
+    /* Estados Semánticos (Simplificados) */
+    --success: #28a745;             /* Verde (necesario para stock/ok) */
+    --warning: #ffc107;             /* Amarillo */
+    --danger: #dc3545;              /* Rojo error */
+    --info: #17a2b8;                /* Azul info */
+}
 
+/* ========================================= */
+/* RESET & BASICS                            */
+/* ========================================= */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-color: #f4f7f9;
-    color: #333;
+    line-height: 1.6;
     min-height: 100vh;
 }
 
-/* --- Estilos Generales de Componentes --- */
-/* assets/css/global.css */
+h1, h2, h3 { color: var(--text-color); margin-top: 0; }
 
-/* Estilo del Navegador */
-#main-nav {
-    background-color: #333;
-    padding: 10px;
-    margin-top: 10px;
-}
+a { text-decoration: none; color: var(--primary-color); }
+a:hover { text-decoration: underline; }
 
-#main-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center; /* Centrado */
-    gap: 20px; /* Espacio entre links */
-    margin: 0;
-    padding: 0;
-}
-
-#main-nav a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-#main-nav a:hover, #main-nav a.active {
-    background-color: #555;
-}
-
-/* El botón de salir en rojo */
-#main-nav a.logout {
-    background-color: #d9534f;
-}
-#main-nav a.logout:hover {
-    background-color: #c9302c;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
+/* ========================================= */
+/* BOTONES UNIFICADOS                        */
+/* ========================================= */
+button, .btn {
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
     border: none;
-    padding: 10px 20px;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-}
+/* Botón Principal (Rojo) */
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-primary:hover { background-color: var(--primary-hover); }
 
-.btn-success {
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+/* Botón Secundario (Gris) */
+.btn-secondary { background-color: #e2e6ea; color: var(--text-color); border: 1px solid #ced4da; }
+.btn-secondary:hover { background-color: #dae0e5; }
 
-.btn-success:hover {
-    background-color: #4cae4c;
-}
+/* Botón Éxito (Verde - solo para guardar/confirmar) */
+.btn-success { background-color: var(--success); color: white; }
+.btn-success:hover { background-color: #218838; opacity: 0.9; }
 
-.btn-danger {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+/* Botón Peligro (Rojo o Gris Oscuro para borrar) */
+.btn-danger { background-color: var(--text-color); color: white; } /* Elegante: borrar en negro/gris */
+.btn-danger:hover { background-color: #000; }
 
-.btn-danger:hover {
-    background-color: #c9302c;
-}
+/* ========================================= */
+/* FORMULARIOS (Inputs y Selects)            */
+/* ========================================= */
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-light); }
 
-.btn-secondary {
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-secondary:hover {
-    background-color: #ddd;
-}
-
-/* --- Formularios --- */
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.form-group input, .form-group select, .form-group textarea {
+input[type="text"], input[type="number"], input[type="date"],
+input[type="email"], input[type="password"], input[type="tel"],
+select, textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    box-sizing: border-box; 
+    background-color: var(--bg-card);
+    font-size: 14px;
+    color: var(--text-color);
+    box-sizing: border-box;
+    transition: border 0.3s;
 }
 
-/* --- Tablas de Datos --- */
-.data-table, .modal-data-table {
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(209, 38, 8, 0.1);
+}
+
+/* ========================================= */
+/* TABLAS GLOBALES                           */
+/* ========================================= */
+.tabla-responsive { overflow-x: auto; margin-top: 20px; }
+
+.data-table, .tabla-datos {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 0.9em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background-color: var(--bg-card);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.data-table th, .data-table td, 
-.modal-data-table th, .modal-data-table td {
-    border: 1px solid #eee;
+.data-table th, .tabla-datos th {
+    background-color: #2c2c2c; /* Encabezado oscuro casi negro */
+    color: white;
     padding: 12px 15px;
     text-align: left;
-}
-
-.data-table th, .modal-data-table th {
-    background-color: #e9ecef;
-    color: #333;
     font-weight: 600;
 }
 
-.data-table tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
+.data-table td, .tabla-datos td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.data-table tbody tr:hover {
-    background-color: #e2e6ea;
+.data-table tr:hover, .tabla-datos tr:hover {
+    background-color: #f9f9f9;
 }
-

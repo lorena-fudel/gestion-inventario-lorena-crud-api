@@ -1,98 +1,96 @@
-<link rel="stylesheet" href="assets/css/productoNuevo.css">
-<section id="registro-productos-view" class="main-content-section">
-    <h2>Registro Masivo de Nuevos Productos</h2>
+<link rel="stylesheet" href="/assets/css/productoNuevo.css">
+<link rel="stylesheet" href="/assets/css/global.css">
+<section id="registro-productos-view" class="vista-seccion">
+    <h2 class="titulo-seccion">Registro Masivo</h2>
 
-    <div class="card form-card">
-        <h3>Datos del Nuevo Producto</h3>
-        
-        <form id="form-nuevo-producto" class="form-grid-2col">
-
-            <div class="form-column">
-                <div class="form-group">
-                    <label>Categoría:</label>
-                    <select id="select-categoria" class="form-control">
+    <div class="contenedor-doble-panel">
+        <div class="panel-formulario">
+            <h3 class="subtitulo-panel">Datos del Producto</h3>
+            
+            <form id="form-nuevo-producto" class="formulario-compacto">
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Categoría</label>
+                    <select id="select-categoria" class="select-moderno">
                         <option value="">Cargando...</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="new-producto-nombre">Nombre del Producto *</label>
-                    <input type="text" id="new-producto-nombre" required placeholder="Ej: Manzanas Golden">
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Nombre *</label>
+                    <input type="text" id="new-producto-nombre" class="input-moderno" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="new-producto-sku">Código de Barras / SKU *</label>
-                    <input type="text" id="new-producto-sku" required placeholder="Ej: 8410000...">
-                </div>
-
-                <div class="form-group">
-                    <label for="new-producto-precio">Precio Unitario (€) *</label>
-                    <input type="number" id="new-producto-precio" required min="0" step="0.01">
-                </div>
-            </div>
-
-            <div class="form-column">
-                <div class="form-group">
-                    <label for="new-producto-unidad">Unidad de Medida *</label>
-                    <input type="text" id="new-producto-unidad" required placeholder="kg, unidad, litro...">
-                </div>
-
-                <div class="form-group">
-                    <label for="new-producto-stock-min">Stock Mínimo (Alerta) *</label>
-                    <input type="number" id="new-producto-stock-min" required value="10">
-                </div>
-
-                <div class="form-group prov-group-container">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label>Proveedor:</label>
-                        <button type="button" id="btn-toggle-new-prov" class="btn-secondary btn-sm" style="font-size: 0.8rem;">
-                            ➕ Crear Nuevo
-                        </button>
+                <div class="fila-flexible">
+                    <div class="grupo-campo mitad">
+                        <label class="etiqueta-campo">SKU *</label>
+                        <input type="text" id="new-producto-sku" class="input-moderno" required>
                     </div>
+                    <div class="grupo-campo mitad">
+                        <label class="etiqueta-campo">Precio *</label>
+                        <input type="number" id="new-producto-precio" class="input-moderno" required>
+                    </div>
+                </div>
 
-                    <select id="select-proveedor" class="form-control">
+                <div class="fila-flexible">
+                    <div class="grupo-campo mitad">
+                        <label class="etiqueta-campo">Unidad *</label>
+                        <input type="text" id="new-producto-unidad" class="input-moderno" required>
+                    </div>
+                    <div class="grupo-campo mitad">
+                        <label class="etiqueta-campo">Stock Mín *</label>
+                        <input type="number" id="new-producto-stock-min" class="input-moderno" required value="10">
+                    </div>
+                </div>
+
+                <div class="grupo-campo">
+                    <div class="cabecera-campo-accion">
+                        <label class="etiqueta-campo">Proveedor</label>
+                        <button type="button" id="btn-toggle-new-prov" class="boton-pequeno">Nuevo</button>
+                    </div>
+                    <select id="select-proveedor" class="select-moderno">
                         <option value="">Cargando...</option>
                     </select>
-
-                    <div id="new-prov-container" style="display: none; background: #f9f9f9; padding: 10px; border: 1px dashed #ccc; margin-top: 5px;">
-                        <input type="text" id="new-prov-nombre" placeholder="Nombre Empresa" style="margin-bottom: 5px; width: 100%;">
-                        <input type="email" id="new-prov-email" placeholder="Email" style="margin-bottom: 5px; width: 100%;">
-                        <input type="tel" id="new-prov-telefono" placeholder="Teléfono" style="margin-bottom: 5px; width: 100%;">
-                        <input type="text" id="new-prov-direccion" placeholder="Dirección" style="width: 100%;">
+                    
+                    <div id="new-prov-container" class="sub-formulario" style="display: none;">
+                        <input type="text" id="new-prov-nombre" class="input-moderno" placeholder="Nombre Empresa">
+                        <input type="email" id="new-prov-email" class="input-moderno" placeholder="Email">
+                        <input type="tel" id="new-prov-telefono" class="input-moderno" placeholder="Teléfono">
+                        <input type="text" id="new-prov-direccion" class="input-moderno" placeholder="Dirección">
                     </div>
                 </div>
 
-                <div class="form-actions full-width" style="margin-top: 20px; text-align: right;">
-                    <button type="button" id="btn-anadir-a-tabla" class="btn-primary">
-                        ➕ Añadir a la Lista Temporal
+                <div class="acciones-formulario">
+                    <button type="button" id="btn-anadir-a-tabla" class="boton-secundario ancho-completo">
+                        ⬇ Añadir a Lista
                     </button>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <div class="card table-card">
-        <h3>Productos Pendientes de Registro (<span id="contador-productos-temp">0</span>)</h3>
-        
-        <table id="productos-temp-table" class="data-table">
-            <thead>
-                <tr>
-                    <th>SKU</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Unidad</th>
-                    <th>Proveedor</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-        
-        <div class="final-actions">
-            <button id="btn-registrar-productos" class="btn-success" disabled>
-                💾 Registrar TODOS en Base de Datos
-            </button>
+        <div class="panel-lista-temporal">
+            <h3 class="subtitulo-panel">Pendientes (<span id="contador-productos-temp">0</span>)</h3>
+            
+            <div class="contenedor-tabla scroll-y">
+                <table id="productos-temp-table" class="tabla-moderna simple">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Unidad</th>
+                            <th>Prov.</th>
+                            <th>X</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <div class="accion-final">
+                <button id="btn-registrar-productos" class="boton-primario ancho-completo" disabled>
+                    💾 Guardar Todo
+                </button>
+            </div>
         </div>
     </div>
 </section>
