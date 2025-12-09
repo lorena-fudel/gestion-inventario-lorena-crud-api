@@ -1,93 +1,178 @@
 <link rel="stylesheet" href="assets/css/recepcionPedidos.css"> 
-<div class="container-almacen">
+<div class="vista-seccion">
+    <header class="cabecera-seccion">
+        <h1 class="titulo-seccion">Recepción de Mercancía</h1>
+    </header>
 
-        <div class="header-section">
-            <h1>🚚 Recepción de Mercancía</h1>
+    <div class="panel-controles">
+        <div class="grupo-botones">
+            <button id="btn-nuevo-pedido" class="boton-primario">
+                ➕ Nuevo Pedido
+            </button>
+            <button id="btn-nuevo-albaran" class="boton-secundario">
+                📄 Nuevo Albarán
+            </button>
         </div>
 
-        <div id="listaPedidosContainer">
-            
-            <div class="barra-busqueda">
-            <div class="grupo-filtro">
+        <div class="grupo-filtros">
+            <div class="filtro-item-inline">
                 <label>Filtrar Estado:</label>
-                <select id="filtroEstadoRecepcion">
+                <select id="filtroEstadoRecepcion" class="select-moderno">
                     <option value="">Pendientes y Parciales</option>
                     <option value="pendiente">Solo Pendientes</option>
                     <option value="parcial">Solo Parciales</option>
-                    <option value="recibido">Solo recibidos</option> </select>
+                    <option value="recibido">Completados</option> 
+                </select>
             </div>
-            <div class="grupo-filtro boton-area">
-                <button id="btnLimpiarRecepcion" class="btn-limpiar">Limpiar</button>
-            </div>
-            </div>
-        <div class="tabla-responsive">
-            <table class="tabla-datos">
-                <thead>
-                    <tr>
-                        <th>N° Pedido</th>
-                        <th>Proveedor</th>
-                        <th>Fecha Creación</th>
-                        <th>Total (€)</th>
-                        <th>Estado</th>
-                        <th style="text-align: center;">Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaPedidosRecepcionBody">
-                    </tbody>
-            </table>
+            <button id="btnLimpiarRecepcion" class="boton-limpiar">Limpiar</button>
         </div>
     </div>
 
-    <div id="albaranModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="header-section modal-header">
-                <h2 id="pedido-id-albaran">Creación de Albarán</h2>
-                <span class="close-button" onclick="closeRecepcionForm()">&times;</span>
+    <div class="contenedor-tabla">
+        <table class="tabla-moderna">
+            <thead>
+                <tr>
+                    <th>N° Pedido</th>
+                    <th>Proveedor</th>
+                    <th>Fecha</th>
+                    <th>Total (€)</th>
+                    <th>Estado</th>
+                    <th class="texto-centro">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tablaPedidosRecepcionBody">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="albaranModal" class="modal-fondo" style="display: none;">
+        <div class="modal-tarjeta extra-grande">
+            <div class="modal-cabecera">
+                <h2 id="pedido-id-albaran">Crear Albarán</h2>
+                <span class="boton-cerrar" onclick="closeRecepcionForm()">&times;</span>
             </div>
 
-            <div class="barra-busqueda" style="border-left-color: #ffc107;">
+            <div class="panel-albaran-inputs">
                 <input type="hidden" id="albaran-pedido-id">
                 
-                <div class="grupo-filtro" style="flex: 0.5;">
-                    <label for="albaran-fecha">Fecha de Recepción:</label>
-                    <input type="date" id="albaran-fecha">
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Fecha Recepción:</label>
+                    <input type="date" id="albaran-fecha" class="input-moderno">
                 </div>
 
-                <div class="grupo-filtro" style="flex: 2;">
-                    <label for="albaran-observaciones">Observaciones Generales:</label>
-                    <input type="text" id="albaran-observaciones" placeholder="Daños en el embalaje, etc.">
+                <div class="grupo-campo amplio">
+                    <label class="etiqueta-campo">Observaciones:</label>
+                    <input type="text" id="albaran-observaciones" class="input-moderno" placeholder="Ej: Embalaje dañado...">
                 </div>
             </div>
 
-            <div class="modal-body">
-                <h3>Productos a Recibir</h3>
-                <div class="tabla-responsive">
-                    <table class="tabla-datos">
+            <div class="modal-cuerpo">
+                <h3 class="subtitulo-modal">Verificación de Productos</h3>
+                <div class="contenedor-tabla">
+                    <table class="tabla-items">
                         <thead>
                             <tr>
-                                <th style="width: 5%;">Chequear</th>
+                                <th>Check</th>
                                 <th>Producto</th>
-                                <th>Cant. Pedida</th>
-                                <th>Precio Unitario</th>
-                                <th style="width: 15%;">Cant. Recibida</th>
-                                <th>Total Línea</th>
-                                <th style="width: 30%;">Observaciones Producto</th>
+                                <th>Solicitado</th>
+                                <th>Precio</th>
+                                <th style="width: 15%;">Recibido</th>
+                                <th>Total</th>
+                                <th>Notas</th>
                             </tr>
                         </thead>
-                        <tbody id="albaranProductosBody">
-                            </tbody>
+                        <tbody id="albaranProductosBody"></tbody>
                     </table>
                 </div>
             </div>
             
-            <div class="modal-footer">
-                <div style="font-size: 1.2em;">
-                    <strong>TOTAL PEDIDO:</strong> <span id="albaran-total-monto">0.00 €</span>
+            <div class="modal-pie con-resumen">
+                <div class="resumen-total">
+                    <strong>TOTAL:</strong> <span id="albaran-total-monto">0.00 €</span>
                 </div>
-                <button id="btnGuardarAlbaran" class="btn-primary" style="background-color:#28a745;">
-                    ✅ Registrar Albarán
+                <button id="btnGuardarAlbaran" class="boton-confirmar">
+                    ✅ Registrar Recepción
                 </button>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modalNuevoPedido" class="modal-fondo" style="display: none;">
+    <div class="modal-tarjeta extra-grande">
+        <div class="modal-cabecera">
+            <h2>📝 Registrar Nuevo Pedido a Proveedor</h2>
+            <span class="boton-cerrar" id="btnCerrarModalPedido">&times;</span>
+        </div>
+
+        <form id="form-nuevo-pedido">
+            <div class="panel-albaran-inputs">
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Proveedor:</label>
+                    <select id="np-proveedor" class="select-moderno" required>
+                        <option value="">Seleccione un proveedor...</option>
+                        </select>
+                </div>
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Fecha Emisión:</label>
+                    <input type="date" id="np-fecha" class="input-moderno" required>
+                </div>
+            </div>
+
+            <hr class="linea-divisoria" style="margin: 20px 0; border-color: var(--border-glass);">
+
+            <h3 class="subtitulo-modal">Agregar Productos al Pedido</h3>
+            
+            <div class="fila-flexible" style="align-items: flex-end; margin-bottom: 20px;">
+                <div class="grupo-campo amplio" style="flex: 2;">
+                    <label class="etiqueta-campo">Buscar Producto:</label>
+                    <select id="np-producto-select" class="select-moderno">
+                        <option value="">Buscar producto...</option>
+                        </select>
+                </div>
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Cantidad:</label>
+                    <input type="number" id="np-cantidad" class="input-moderno" min="1" value="1" placeholder="Cant.">
+                </div>
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Costo Unit. (€):</label>
+                    <input type="number" id="np-costo" class="input-moderno" min="0" step="0.01" placeholder="0.00">
+                </div>
+                <button type="button" id="btn-agregar-linea" class="boton-secundario" style="height: 46px;">
+                    ⬇ Agregar
+                </button>
+            </div>
+
+            <div class="contenedor-tabla" style="max-height: 300px; overflow-y: auto;">
+                <table class="tabla-moderna">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="texto-centro">Cant.</th>
+                            <th class="texto-derecha">Costo U.</th>
+                            <th class="texto-derecha">Subtotal</th>
+                            <th class="texto-centro">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="np-tabla-body">
+                        <tr id="np-fila-vacia">
+                            <td colspan="5" class="texto-centro" style="color: var(--text-muted);">
+                                No hay productos en este pedido aún.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-pie con-resumen">
+                <div class="resumen-total">
+                    Total Estimado: <span id="np-total-final">0.00 €</span>
+                </div>
+                <div class="grupo-botones">
+                    <button type="button" id="btn-cancelar-pedido" class="boton-fantasma">Cancelar</button>
+                    <button type="submit" class="boton-confirmar">💾 Guardar y Emitir Pedido</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

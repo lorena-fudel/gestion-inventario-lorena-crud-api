@@ -1,5 +1,5 @@
 <?php
-// api/controllers/AlbaranController.php
+// api/controllers/albaranController.php
 
 function handleAlbaranesRequest($pdo, $method, $id, $data) {
 
@@ -10,29 +10,19 @@ function handleAlbaranesRequest($pdo, $method, $id, $data) {
         // ======================================================
         case 'GET':
             try {
-
-                $baseSql = "
-                    SELECT a.*, p.proveedorId 
-                    FROM albaranes a 
-                    JOIN pedidos p ON a.pedidoId = p.id
-                ";
-
                 if ($id) {
-                    // 1. Cabecera
-                    $stmt = $pdo->prepare($baseSql . " WHERE a.id = ?");
+                    // Cabecera del albarán
+                    $stmt = $pdo->prepare("SELECT * FROM albaranes WHERE id = ?");
                     $stmt->execute([$id]);
                     $albaran = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     if (!$albaran) {
                         http_response_code(404);
-                        echo json_encode([
-                            'success' => false,
-                            'message' => 'Albarán no encontrado.'
-                        ]);
+                        echo json_encode(['success' => false, 'message' => 'Albarán no encontrado.']);
                         return;
                     }
 
-                    // 2. Items del albarán
+                    // Items del albarán
                     $stmt_items = $pdo->prepare("
                         SELECT ai.*, prod.nombre 
                         FROM albaran_items ai 
@@ -40,53 +30,44 @@ function handleAlbaranesRequest($pdo, $method, $id, $data) {
                         WHERE ai.albaranId = ?
                     ");
                     $stmt_items->execute([$id]);
-
                     $albaran['productos'] = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
 
                     echo json_encode($albaran);
 
                 } else {
-                    // Todos los albaranes
-                    $stmt = $pdo->query($baseSql);
+                    // Listar todos los albaranes ordenados por fecha
+                    $stmt = $pdo->query("SELECT * FROM albaranes ORDER BY fechaRecepcion DESC");
                     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
                 }
 
             } catch (\PDOException $e) {
                 http_response_code(500);
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Error al obtener los albaranes.',
-                    'error' => $e->getMessage()
-                ]);
+                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
             }
             break;
 
 
         // ======================================================
-        // POST — crear un albarán y actualizar stock
+        // POST — Crear Albarán y Actualizar Stock
         // ======================================================
         case 'POST':
 
             // Validación de datos mínimos
             if (!isset($data['pedidoId'], $data['fechaRecepcion'], $data['productos'])) {
                 http_response_code(400);
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Faltan campos obligatorios para crear un albarán.'
-                ]);
+                echo json_encode(['success' => false, 'message' => 'Faltan campos obligatorios.']);
                 return;
             }
 
             try {
                 $pdo->beginTransaction();
 
-                // 1. Insertar cabecera
+                // 1. Insertar cabecera del Albarán
                 $sql = "
                     INSERT INTO albaranes (pedidoId, fechaRecepcion, observacionesGenerales)
                     VALUES (?, ?, ?)
                 ";
                 $stmt = $pdo->prepare($sql);
-
                 $stmt->execute([
                     $data['pedidoId'],
                     $data['fechaRecepcion'],
@@ -95,31 +76,36 @@ function handleAlbaranesRequest($pdo, $method, $id, $data) {
 
                 $albaranId = $pdo->lastInsertId();
 
-                // 2. Insertar items
+                // 2. Preparar consultas para Items y Stock
+                // IMPORTANTE: Usamos 'precio_unitario' (o 'precio' según tu BD)
                 $sql_items = "
                     INSERT INTO albaran_items 
-                    (albaranId, productoId, cantidadRecibida, precio, observaciones)
+                    (albaranId, productoId, cantidadRecibida, precioUnitario, observaciones)
                     VALUES (?, ?, ?, ?, ?)
                 ";
-
                 $stmt_items = $pdo->prepare($sql_items);
 
+                $sql_stock = "UPDATE productos SET stock = stock + ? WHERE id = ?";
+                $stmt_stock = $pdo->prepare($sql_stock);
+
+                // 3. Recorrer productos recibidos
                 foreach ($data['productos'] as $item) {
+                    
+                    // Mapeo seguro de precio
+                    $precio = isset($item['precioUnitario']) ? $item['precioUnitario'] : 
+                             (isset($item['precio']) ? $item['precio'] : 0);
+
+                    // Insertar item en albarán
                     $stmt_items->execute([
                         $albaranId,
                         $item['productoId'],
-                        $item['cantidad'],
-                        $item['precio'],
+                        $item['cantidad'],      // El JS envía 'cantidad'
+                        $precio,
                         $item['observaciones'] ?? null
                     ]);
 
-                    // ACTUALIZAR STOCK DEL PRODUCTO
-                    $updateStock = $pdo->prepare("
-                        UPDATE productos 
-                        SET stock = stock + ? 
-                        WHERE id = ?
-                    ");
-                    $updateStock->execute([
+                    // Actualizar STOCK (+ cantidad recibida)
+                    $stmt_stock->execute([
                         $item['cantidad'],
                         $item['productoId']
                     ]);
@@ -138,47 +124,20 @@ function handleAlbaranesRequest($pdo, $method, $id, $data) {
                 http_response_code(500);
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Error al crear el albarán.',
+                    'message' => 'Error al crear albarán.',
                     'error' => $e->getMessage()
                 ]);
             }
-
             break;
-
-
-        // ======================================================
-        // DELETE — eliminar un albarán
-        // ======================================================
+            
+        // DELETE (Opcional)
         case 'DELETE':
-
-            if (!$id) {
-                http_response_code(400);
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'ID de albarán requerido.'
-                ]);
-                return;
-            }
-
-            try {
-                $stmt = $pdo->prepare("DELETE FROM albaranes WHERE id = ?");
-                $stmt->execute([$id]);
-
-                echo json_encode([
-                    'success' => true,
-                    'rows_affected' => $stmt->rowCount()
-                ]);
-
-            } catch (\PDOException $e) {
-                http_response_code(500);
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Error al eliminar albarán.',
-                    'error' => $e->getMessage()
-                ]);
-            }
-
+            if (!$id) return;
+            // Nota: Al borrar un albarán, idealmente deberías restar el stock, 
+            // pero eso requiere una lógica más compleja de reversión.
+            $stmt = $pdo->prepare("DELETE FROM albaranes WHERE id = ?");
+            $stmt->execute([$id]);
+            echo json_encode(['success' => true]);
             break;
-
     }
 }
