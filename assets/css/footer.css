@@ -1,0 +1,17 @@
+footer {
+    background-color: #333;
+    color: #bbb;
+    text-align: center;
+    padding: 10px;
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste del main para no solapar el footer */
+main {
+    padding-bottom: 50px; /* Espacio para el footer fijo */
+    padding-top: 20px;
+    min-height: calc(100vh - 150px); /* Ajuste para el contenido */
+}

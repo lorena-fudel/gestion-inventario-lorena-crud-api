@@ -1,0 +1,70 @@
+header {
+    background-color: #fcfbfb; /* Azul oscuro */
+    color: white;
+    padding: 1em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin-bottom: 0.5em;
+    font-size: 1.8em;
+    color: #d12608;;
+}
+
+.logos{
+    height: 60px;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+#main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    background-color: #d12608; /* Un tono más oscuro */
+    transition: all 0.3s ease;
+}
+
+.hidden-nav {
+    display: none !important; /* Ocultar por defecto */
+}
+
+.nav-btn {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.nav-btn:hover {
+    background-color: #4cae4c;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 20px;
+    color: white;
+    font-size: 0.9em;
+}
+
+.user-info #btn-logout {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+.user-info #btn-logout:hover {
+    background-color: #ddd;
+}

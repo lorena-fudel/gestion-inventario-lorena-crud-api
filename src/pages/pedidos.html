@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="assets/css/pedidos.css">
+<div class="container-pedidos">
+    <div class="header-section">
+        <h1>📦 Gestión de Pedidos</h1>
+    </div>
+
+    <div class="filtros-box">
+        <div class="campo-filtro">
+            <label for="filtroId">Nº Pedido:</label>
+            <input type="text" id="filtroId" placeholder="Ej: 1001">
+        </div>
+
+        <div class="campo-filtro">
+            <label for="filtroProveedor">Proveedor:</label>
+            <select id="filtroProveedor">
+                <option value="">Cargando...</option>
+            </select>
+        </div>
+
+        <div class="campo-filtro">
+            <label for="filtroFecha">Fecha:</label>
+            <input type="date" id="filtroFecha">
+        </div>
+
+        <button id="btnLimpiar" class="btn-reset">Limpiar Filtros</button>
+    </div>
+
+    <div class="tabla-responsive">
+        <table class="tabla-datos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Proveedor</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaPedidosBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 style="margin: 0;">Pedido #<span id="mId">---</span></h2>
+            <span class="close-btn" id="btnCerrarX">&times;</span>
+        </div>
+
+        <div class="modal-body">
+            <div class="info-grid">
+                <div class="info-group">
+                    <label>Fecha:</label>
+                    <span id="mFecha">--/--/----</span>
+                </div>
+                <div class="info-group">
+                    <label>Proveedor:</label>
+                    <span id="mProveedor" style="font-weight: bold;">---</span>
+                </div>
+                <div class="info-group">
+                    <label>Estado:</label>
+                    <span id="mEstado" class="badge">---</span>
+                </div>
+                <div class="info-group">
+                    <label>Total:</label>
+                    <span id="mTotal" style="font-size: 1.1em; font-weight: bold; color: #2c3e50;">0.00 €</span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <h3>Productos Solicitados</h3>
+            <div class="tabla-scroll-modal">
+                <table class="tabla-items">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th style="text-align: center;">Cant.</th>
+                            <th style="text-align: right;">Precio U.</th>
+                            <th style="text-align: right;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mTablaItemsBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnCerrarModal" class="btn-secondary">Cerrar</button>
+        </div>
+    </div>
+</div>

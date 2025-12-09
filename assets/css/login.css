@@ -1,0 +1,38 @@
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.error-message {
+    color: #d9534f;
+    margin-bottom: 15px;
+    font-weight: bold;
+    display: block;
+}
+
+.login-links {
+    margin-top: 20px;
+}
+
+.login-links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}

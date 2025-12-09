@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="assets/css/productoNuevo.css">
+<section id="registro-productos-view" class="main-content-section">
+    <h2>Registro Masivo de Nuevos Productos</h2>
+
+    <div class="card form-card">
+        <h3>Datos del Nuevo Producto</h3>
+        
+        <form id="form-nuevo-producto" class="form-grid-2col">
+
+            <div class="form-column">
+                <div class="form-group">
+                    <label>Categoría:</label>
+                    <select id="select-categoria" class="form-control">
+                        <option value="">Cargando...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-producto-nombre">Nombre del Producto *</label>
+                    <input type="text" id="new-producto-nombre" required placeholder="Ej: Manzanas Golden">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-producto-sku">Código de Barras / SKU *</label>
+                    <input type="text" id="new-producto-sku" required placeholder="Ej: 8410000...">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-producto-precio">Precio Unitario (€) *</label>
+                    <input type="number" id="new-producto-precio" required min="0" step="0.01">
+                </div>
+            </div>
+
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="new-producto-unidad">Unidad de Medida *</label>
+                    <input type="text" id="new-producto-unidad" required placeholder="kg, unidad, litro...">
+                </div>
+
+                <div class="form-group">
+                    <label for="new-producto-stock-min">Stock Mínimo (Alerta) *</label>
+                    <input type="number" id="new-producto-stock-min" required value="10">
+                </div>
+
+                <div class="form-group prov-group-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label>Proveedor:</label>
+                        <button type="button" id="btn-toggle-new-prov" class="btn-secondary btn-sm" style="font-size: 0.8rem;">
+                            ➕ Crear Nuevo
+                        </button>
+                    </div>
+
+                    <select id="select-proveedor" class="form-control">
+                        <option value="">Cargando...</option>
+                    </select>
+
+                    <div id="new-prov-container" style="display: none; background: #f9f9f9; padding: 10px; border: 1px dashed #ccc; margin-top: 5px;">
+                        <input type="text" id="new-prov-nombre" placeholder="Nombre Empresa" style="margin-bottom: 5px; width: 100%;">
+                        <input type="email" id="new-prov-email" placeholder="Email" style="margin-bottom: 5px; width: 100%;">
+                        <input type="tel" id="new-prov-telefono" placeholder="Teléfono" style="margin-bottom: 5px; width: 100%;">
+                        <input type="text" id="new-prov-direccion" placeholder="Dirección" style="width: 100%;">
+                    </div>
+                </div>
+
+                <div class="form-actions full-width" style="margin-top: 20px; text-align: right;">
+                    <button type="button" id="btn-anadir-a-tabla" class="btn-primary">
+                        ➕ Añadir a la Lista Temporal
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card table-card">
+        <h3>Productos Pendientes de Registro (<span id="contador-productos-temp">0</span>)</h3>
+        
+        <table id="productos-temp-table" class="data-table">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Unidad</th>
+                    <th>Proveedor</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+        
+        <div class="final-actions">
+            <button id="btn-registrar-productos" class="btn-success" disabled>
+                💾 Registrar TODOS en Base de Datos
+            </button>
+        </div>
+    </div>
+</section>

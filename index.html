@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inventario</title>
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script type="module" src="./src/routers/router.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logos-container">
+            <img class="logos" src="assets/images/logo1.png" alt="logo">
+            <img class="logos" src="assets/images/logo2.png" alt="logo">
+        </div>
+        <h1>Sistema de Inventario</h1>
+
+        <nav id="main-nav" style="display: none;">
+            <ul>
+                <li><a href="#inicio" class="nav-link">🏠 Inicio</a></li>
+                <li><a href="#almacen" class="nav-link">📦 Almacén</a></li>
+                <li><a href="#pedidos" class="nav-link">🛍️ Pedidos</a></li>
+                <li><a href="#albaranes" class="nav-link">📄 Albaranes</a></li>
+                <li><a href="#recepcion" class="nav-link">✅ Recepción</a></li>
+                <li><a href="#" id="btn-logout" class="nav-link logout">🚪 Salir</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app-content"></main>
+
+    <footer>
+        <p>&copy; 2025 Gestión de Inventario</p>
+    </footer>
+</body>
+</html>

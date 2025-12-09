@@ -1,0 +1,75 @@
+/* Responsive tablet ??*/
+@media (max-width: 900px) {
+    .flex-container, .split-layout, .form-grid, .form-grid-2col {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .card, .list-section, .comparison-section {
+        max-width: 100%;
+    }
+    
+    #main-nav {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+    
+    .user-info {
+        position: static;
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .data-table, .modal-data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr {
+        display: block;
+    }
+
+    .data-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .data-table td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .data-table td::before {
+        /* Poner títulos de columna en móvil */
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+/*responsive movil?? */
+@media (max-width: 500px) {
+    .modal-content {
+        padding: 20px;
+    }
+
+    .modal-content.large-modal {
+        max-width: 100%;
+    }
+
+    .close-button {
+        top: 5px;
+        right: 10px;
+        font-size: 24px;
+    }
+}

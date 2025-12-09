@@ -1,0 +1,186 @@
+/* --- CONTENEDOR Y FILTROS --- */
+.container-pedidos {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.filtros-box {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-filtro label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.campo-filtro input, .campo-filtro select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+/* --- TABLA PRINCIPAL --- */
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tabla-datos th, .tabla-datos td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.tabla-datos th {
+    background-color: #343a40;
+    color: white;
+    font-weight: 500;
+}
+
+/* Badges de Estado */
+.badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.badge.recibido { background-color: #d4edda; color: #155724; }
+.badge.pendiente { background-color: #fff3cd; color: #856404; }
+.badge.cancelado { background-color: #f8d7da; color: #721c24; }
+
+/* Botones */
+.btn-ver {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.btn-ver:hover { background-color: #0056b3; }
+
+.btn-reset {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+/* ========================================= */
+/* ESTILOS DEL MODAL (CRITICO) */
+/* ========================================= */
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo a la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente oscuro */
+    z-index: 10000; /* Encima de todo */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+}
+
+.modal-overlay.active {
+    display: flex; /* Se muestra al activar esta clase */
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Evita que sea más alto que la pantalla */
+}
+
+.modal-header {
+    background-color: #f1f3f5;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+}
+.close-btn:hover { color: #000; }
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto; /* Scroll si el contenido es largo */
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-group label {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+}
+
+.divider { border: 0; border-top: 1px solid #eee; margin: 15px 0; }
+
+.tabla-items { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+.tabla-items th { background-color: #f8f9fa; color: #333; padding: 8px; text-align: left;}
+.tabla-items td { padding: 8px; border-bottom: 1px solid #eee; }
+
+.modal-footer {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+    background-color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

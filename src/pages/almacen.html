@@ -1,0 +1,111 @@
+<link rel="stylesheet" href="assets/css/almacen.css">
+<section id="inventario-view" class="main-content-section">
+    <h2>Gestión de Inventario y Productos</h2>
+    
+    <div class="inventory-controls">
+        <!-- Botón para abrir el formulario modal de CRUD -->
+        <button id="btn-abrir-modal-producto" class="btn-primary">➕ Registrar Nuevo Producto</button>
+        
+        <!-- Controles de filtrado y búsqueda -->
+        <div class="search-group">
+            <input type="text" id="filtro-producto-nombre" placeholder="Buscar por Nombre o SKU">
+            <select id="filtro-producto-categoria">
+                <option value="">Todas las Categorías</option>
+                <!-- Opciones de categorías se cargarán con JS -->
+            </select>
+            <button id="btn-filtrar-inventario" class="btn-secondary">Filtrar</button>
+            <button id="btn-ordenar-precio" class="btn-secondary" style="margin-left: 5px;">
+        ⬆️ Precio
+    </button>
+        </div>
+    </div>
+    
+    <!-- Contenedor principal para el Listado de Productos -->
+    <h3>Stock Actual de Productos</h3>
+    <table id="tabla-inventario" class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Código de barras</th>
+                <th>Stock</th>
+                <th>Stock Mín.</th>
+                <th>Precio (€)</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos de los productos se insertarán aquí con JS (CRUD) -->
+        </tbody>
+    </table>
+</section>
+
+<!-- MODAL DE GESTIÓN DE PRODUCTOS (Crear, Modificar, Borrar) -->
+<!-- Este modal se activa con el botón "Registrar Nuevo Producto" o al hacer clic en Modificar/Borrar en la tabla. -->
+<div id="producto-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content large-modal">
+        <span class="close-button">&times;</span>
+        <h3 id="modal-title">Registrar Nuevo Producto</h3>
+        
+        <form id="producto-form">
+            <input type="hidden" id="producto-id">
+            
+            <div class="form-grid">
+                <!-- Columna 1 -->
+                <div class="form-group">
+                    <label for="producto-nombre">Nombre del Producto</label>
+                    <input type="text" id="producto-nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="producto-sku">Código de Barras / SKU</label>
+                    <input type="text" id="producto-sku" required>
+                </div>
+                <div class="form-group">
+                    <label for="producto-categoria">Categoría</label>
+                    <!-- Usaremos un select para categorías que se llenará con JS -->
+                    <select id="producto-categoria" required>
+                        <option value="">Selecciona Categoría</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="producto-proveedor">Proveedor Principal</label>
+                    <!-- Usaremos un select para proveedores que se llenará con JS -->
+                    <select id="producto-proveedor" required>
+                        <option value="">Selecciona Proveedor</option>
+                    </select>
+                </div>
+
+                <!-- Columna 2 -->
+                <div class="form-group">
+                    <label for="producto-stock">Stock Actual</label>
+                    <input type="number" id="producto-stock" required min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="producto-stock-minimo">Stock Mínimo (Alerta)</label>
+                    <input type="number" id="producto-stock-minimo" required min="0" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="producto-precio">Precio Unitario (€)</label>
+                    <input type="number" id="producto-precio" required min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="producto-unidad-medida">Unidad de Medida (kg, unidad, litro, etc.)</label>
+                    <input type="text" id="producto-unidad-medida" required>
+                </div>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="producto-descripcion">Descripción</label>
+                <textarea id="producto-descripcion" rows="2"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="btn-guardar-producto" class="btn-success">💾 Guardar Producto</button>
+                <button type="button" id="btn-borrar-producto" class="btn-danger" style="display: none;">🗑️ Borrar Producto</button>
+                <button type="button" id="btn-cancelar-producto" class="btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

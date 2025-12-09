@@ -1,0 +1,67 @@
+→ escaneado de código de barras
+→ open food fast, productos API
+→ insertar productos en el inventario (varios a la vez)
+→ como logearnos, con contraseña, de alguna manera ¿Qué es el MD5? El MD5 (algoritmo de resumen de mensajes) es un protocolo criptográfico que se usa para autenticar mensajes y verificar el contenido y las firmas digitales
+→ recepción de pedido, se compara el pedido (se busca por el numero de pedido) con el albaran (numero de albaran) ¿hay diferencias? se crea
+un tercer documento donde se vean las diferencias entre pedido y albaran de entrada de productos.
+
+
+??? ??? ??? ??? ??? ???
+→LO QUE LE IMPORTA A TANA, DAR DE ALTA DAR DE ALTA EL PEDIDO?, DAR DE ALTA AL ALBARAN?, CONFIRMAR LA ENTRADA DEL PEDIDO?
+??? ??? ??? ??? ??? ???
+
+
++++++++++++++++++++++++++++++
+conceptos nuevos generales:
++++++++++++++++++++++++++++++
+ddd architecture
+spa architecture
+md5 password
++++++++++++++++++++++++++++++
+https://www.youtube.com/watch?v=jLMIMgwgLLw
+
+
+************
+PANTALLAS:
+************
+1. login
+	+input usuario
+	+input contraseña
+	+botón de acceso
+	+link de recuperar contraseña
+	+link de nuevo usuario
+
+2. welcome
+	+información de la pagina
+	+carrusel de fotos
+
+3. REGISTRAR PEDIDO:  (ESTE ES UN PASO IMPORTANTE A EXPLICAR A LOS USUARIOS) SE FUCIONA TODOS LOS PEDIDOS Y SE CREA UNO DE TODOS.
+	+input para proveedor, desplegable y seleccionar el proveedor
+	+input cantidad de producto kilos? litros? unidades?
+	+input nombre de producto, desplegable
+	+text área al final de la pantalla para observaciones
+	+estado del pedido?? pendiente?tramitado?
+	+check de todo correcto
+	+DIFERENCIAR QUE USUARIO-PROFESOR HIZO CADA PEDIDO Y EL COSTE, 
+	modal con un resumen de: coste total de pedidos, con el numero...
+
+4. recepción de pedidos (asociar numero de pedido con numero de albaranes)
+	+input numero de pedido (al hacer click en buscar numero de pedido se abra un modal con el pedido, e ir checkeando que ha entrado, 				al hacer check se ponga en verde la fecha y la hora del check, debe tener un campo para objervaciones)
+				UN MISMO PEDIDO DEBE PODERSE ASOCIAR CON VARIOS ALBARANES.
+	+input numero de albaran : al hacer clic en el botón buscar/comparar, se compare con el pedido que se ha entroducido e "imprima" por 				   pantalla una lista con las diferencias.
+	
+5. inventario de productos -MI PAGE DE ALMACEN- (lista de productos 	completa, todo lo que hay en el almacen)
+	+modal que superponga y se vea con un filtro oscuro el fondo, al 	activar con el clic el boton ver inventario completo
+
+6. inserción de productos nuevos
+	+input nombre del producto
+	+input proveedor
+	+id del producto
+	+...
+
+
+7.RECETAS (ingredientes, alergenos, poder imprimir?, precio de la receta)
+
+8. page de incidencias, enviar un email-mensaje que salga al conectarse a la app con su usuario → al profe un mensaje / al servicio técnico un email ??
+
+9.logout

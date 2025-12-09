@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="assets/css/albaranes.css">
+<div class="container-albaranes">
+    <div class="header-section">
+        <h1>🚛 Gestión de Albaranes</h1>
+    </div>
+
+    <div class="filtros-box">
+        <div class="campo-filtro">
+            <label for="filtroId">Nº Albarán:</label>
+            <input type="text" id="filtroId" placeholder="Ej: ALB-24-001">
+        </div>
+
+        <div class="campo-filtro">
+            <label for="filtroProveedor">Proveedor:</label>
+            <select id="filtroProveedor">
+                <option value="">Cargando...</option>
+            </select>
+        </div>
+
+        <div class="campo-filtro">
+            <label for="filtroFecha">Fecha:</label>
+            <input type="date" id="filtroFecha">
+        </div>
+
+        <button id="btnLimpiar" class="btn-reset">Limpiar Filtros</button>
+    </div>
+
+    <div class="tabla-responsive">
+        <table class="tabla-datos">
+            <thead>
+                <tr>
+                    <th>ID Albarán</th>
+                    <th>Ref. Pedido</th>
+                    <th>Fecha Recepción</th>
+                    <th>Proveedor</th>
+                    <th>Nota</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaAlbaranesBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modalOverlayAlb" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Albarán <span id="mId">---</span></h2>
+            <span class="close-btn" id="btnCerrarX">&times;</span>
+        </div>
+
+        <div class="modal-body">
+            <div class="info-grid">
+                <div class="info-group">
+                    <label>Fecha:</label>
+                    <span id="mFecha">--/--/----</span>
+                </div>
+                <div class="info-group">
+                    <label>Proveedor:</label>
+                    <span id="mProveedor" style="font-weight: bold;">---</span>
+                </div>
+                <div class="info-group">
+                    <label>Ref. Pedido:</label>
+                    <span id="mPedidoId" class="badge pendiente">---</span>
+                </div>
+                <div class="info-group">
+                    <label>Valoración Total:</label>
+                    <span id="mTotalValorado" style="font-size: 1.2em; font-weight: bold; color: #28a745;">0.00 €</span>
+                </div>
+            </div>
+
+            <div class="nota-box">
+                <label>Nota de entrega:</label>
+                <p id="mNota">---</p>
+            </div>
+
+            <hr class="divider">
+
+            <h3>Artículos Recibidos</h3>
+            <div class="tabla-scroll-modal">
+                <table class="tabla-items">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th style="text-align: center;">Cant.</th>
+                            <th style="text-align: right;">Precio U.</th>
+                            <th style="text-align: right;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mTablaItemsBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnCerrarModal" class="btn-secondary">Cerrar</button>
+        </div>
+    </div>
+</div>

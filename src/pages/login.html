@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="assets/css/login.css">
+<section id="login-view" class="auth-container">
+    <h2>Acceso al Sistema de Inventario</h2>
+
+    <!-- Formulario de Inicio de Sesión -->
+    <form id="login-form" class="login-form">
+        
+        <!-- Campo de Usuario -->
+        <div class="form-group">
+            <label for="login-usuario">Usuario</label>
+            <input 
+                type="text" 
+                name="username"
+                id="login-usuario" 
+                placeholder="Ingresa tu nombre de usuario" 
+                required
+            >
+        </div>
+        
+        <!-- Campo de Contraseña -->
+        <div class="form-group">
+            <label for="login-contrasena">Contraseña</label>
+            <input 
+                type="password" 
+                name="password"
+                id="login-contrasena" 
+                placeholder="Ingresa tu contraseña" 
+                required
+            >
+        </div>
+        
+        <!-- Mensaje de Error (Oculto por defecto) -->
+        <p id="login-error-message" class="error-message" style="display: none;">
+            Credenciales incorrectas. CUCU Inténtalo de nuevo.
+        </p>
+
+        <!-- Botón de Acceso -->
+        <button type="submit" id="btn-acceso" class="btn-primary">
+            Acceder
+        </button>
+    </form>
+    
+    <!-- Enlaces Adicionales -->
+    <div class="login-links">
+        <p>
+            <a href="#" id="link-recuperar-contrasena">¿Olvidaste tu contraseña?</a>
+        </p>
+        <p>
+            ¿No tienes cuenta? <a href="#" id="link-nuevo-usuario">Registrar nuevo usuario</a>
+        </p>
+        <p class="mt-20">
+             <a href="#" id="btn-back-to-landing">← Volver al Inicio</a>
+        </p>
+    </div>
+</section>
