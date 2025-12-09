@@ -4,20 +4,23 @@ let todosLosPedidos = [];
 let todosLosProveedores = [];
 
 export const pedidosController = {
-    
-    // Método de inicialización llamado por el router
+    // Método de inicialización
     init: async () => {
-        console.log("Controlador de Pedidos INICIADO");
+        console.log("🚀 Controlador de Pedidos INICIADO");
 
         // 1. Obtener datos
-        todosLosPedidos = await dataService.getAllPedidos();
-        todosLosProveedores = await dataService.getAllProveedores();
+        try {
+            todosLosPedidos = await dataService.getAllPedidos();
+            todosLosProveedores = await dataService.getAllProveedores();
+        } catch (error) {
+            console.error("Error cargando datos:", error);
+        }
 
         // 2. Renderizar contenido inicial
         renderizarSelectProveedores();
         renderizarTabla(todosLosPedidos);
 
-        // 3. Activar lógica (filtros y modal)
+        // 3. Activar lógica
         configurarFiltros();
         configurarModal();
     }
@@ -32,15 +35,20 @@ function renderizarTabla(lista) {
     tbody.innerHTML = '';
 
     if (!lista || lista.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" align="center">No hay pedidos registrados en la base de datos.</td></tr>';
-                return;
-            }
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay pedidos que coincidan.</td></tr>';
+        return;
+    }
 
     lista.forEach(pedido => {
-        // Encontrar proveedor
-        const prov = todosLosProveedores.find(p => p.id === pedido.proveedorId);
-        const nombreProv = prov ? prov.nombre : 'Desconocido';
+        // Encontrar proveedor con seguridad
+        const prov = todosLosProveedores.find(p => p.id == pedido.proveedorId); // Usamos == por si vienen tipos distintos (string/number)
+        const nombreProv = prov ? prov.nombre : 'Proveedor desconocido';
+        
+        // Formatear fecha
         const fecha = new Date(pedido.fecha).toLocaleDateString('es-ES');
+        
+        // Formatear total
+        const total = parseFloat(pedido.total || 0).toFixed(2);
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -48,7 +56,7 @@ function renderizarTabla(lista) {
             <td>${fecha}</td>
             <td>${nombreProv}</td>
             <td><span class="badge ${pedido.estado}">${pedido.estado}</span></td>
-            <td>${parseFloat(pedido.total).toFixed(2)} €</td>
+            <td>${total} €</td>
             <td style="text-align: center;">
                 <button class="btn-ver" data-id="${pedido.id}">Ver</button>
             </td>
@@ -76,34 +84,28 @@ function configurarModal() {
     const modalOverlay = document.getElementById('modalOverlay');
     const btnCerrarX = document.getElementById('btnCerrarX');
     const btnCerrarBtn = document.getElementById('btnCerrarModal');
-    const tbodyTabla = document.getElementById('tablaPedidosBody'); // Para delegación
-    const btnVerDetalles = document.getElementsByClassName('btn-ver');
+    const tbodyTabla = document.getElementById('tablaPedidosBody');
 
-    // 1. ABRIR MODAL (Delegación de eventos en la tabla)
+    // 1. ABRIR MODAL (Usando Delegación de Eventos)
+    // Esto es crucial: escuchamos el click en la tabla, no en los botones individuales
     tbodyTabla.addEventListener('click', (e) => {
+        // Verificamos si lo que se clickeó es el botón VER
         if (e.target.classList.contains('btn-ver')) {
-            const idPedido = e.target.getAttribute('data-id');
-            mostrarDetallePedido(idPedido);
+            const idSeleccionado = e.target.getAttribute('data-id');
+            console.log("Click detectado en pedido ID:", idSeleccionado);
+            mostrarDetallePedido(idSeleccionado);
         }
     });
 
-    // 2. CERRAR MODAL (Funciones)
+    // 2. CERRAR MODAL
     const cerrarModal = () => {
         modalOverlay.classList.remove('active');
     };
 
     if (btnCerrarX) btnCerrarX.addEventListener('click', cerrarModal);
     if (btnCerrarBtn) btnCerrarBtn.addEventListener('click', cerrarModal);
-    if (btnVerDetalles) {
-        Array.from(btnVerDetalles).forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const pedidoId = e.target.getAttribute('data-id');
-                mostrarDetallePedido(pedidoId);
-            });
-        },);
-    }
 
-    // Cerrar si se hace clic fuera de la ventana blanca
+    // Cerrar si clic fuera
     window.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
             cerrarModal();
@@ -112,21 +114,25 @@ function configurarModal() {
 }
 
 function mostrarDetallePedido(id) {
-    console.log("Intentando ver detalles del Pedido ID:", pedidoId);
-    const pedido = todosLosPedidos.find(p => p.id == id); // == para permitir string/num
-    if (!pedido) return;
+    // Aquí estaba tu error antes: asegúrate de usar 'id' que es el parámetro que recibes
+    const pedido = todosLosPedidos.find(p => p.id == id); 
 
-    const proveedor = todosLosProveedores.find(p => p.id === pedido.proveedorId);
+    if (!pedido) {
+        console.error("No se encontró el pedido con ID:", id);
+        return;
+    }
+
+    const proveedor = todosLosProveedores.find(p => p.id == pedido.proveedorId);
 
     // Rellenar cabecera
     document.getElementById('mId').textContent = pedido.id;
     document.getElementById('mFecha').textContent = new Date(pedido.fecha).toLocaleString('es-ES');
     document.getElementById('mProveedor').textContent = proveedor ? proveedor.nombre : 'No encontrado';
-    document.getElementById('mTotal').textContent = pedido.total.toFixed(2) + ' €';
+    document.getElementById('mTotal').textContent = parseFloat(pedido.total).toFixed(2) + ' €';
     
     const badgeEstado = document.getElementById('mEstado');
     badgeEstado.textContent = pedido.estado;
-    badgeEstado.className = `badge ${pedido.estado}`; // Resetear clases y poner la correcta
+    badgeEstado.className = `badge ${pedido.estado}`; 
 
     // Rellenar tabla de items
     const tbodyItems = document.getElementById('mTablaItemsBody');
@@ -135,20 +141,25 @@ function mostrarDetallePedido(id) {
     if (pedido.items && pedido.items.length > 0) {
         pedido.items.forEach(item => {
             const tr = document.createElement('tr');
+            
+            // Seguridad: a veces la API devuelve productoNombre o nombre
+            const nombreProd = item.nombre || item.productoNombre || 'Producto';
+            
             tr.innerHTML = `
-                <td>${item.nombre}</td>
+                <td>${nombreProd}</td>
                 <td style="text-align: center;">${item.cantidad}</td>
-                <td style="text-align: right;">${item.precioUnitario.toFixed(2)} €</td>
-                <td style="text-align: right;"><strong>${item.subtotal.toFixed(2)} €</strong></td>
+                <td style="text-align: right;">${parseFloat(item.precioUnitario).toFixed(2)} €</td>
+                <td style="text-align: right;"><strong>${parseFloat(item.subtotal).toFixed(2)} €</strong></td>
             `;
             tbodyItems.appendChild(tr);
         });
     } else {
-        tbodyItems.innerHTML = '<tr><td colspan="4">Sin detalles de productos</td></tr>';
+        tbodyItems.innerHTML = '<tr><td colspan="4" align="center">Sin detalles de productos</td></tr>';
     }
 
-    // Mostrar modal agregando la clase CSS
-    document.getElementById('modalOverlay').classList.add('active');
+    // Mostrar modal
+    const modal = document.getElementById('modalOverlay');
+    modal.classList.add('active');
 }
 
 // --- FILTROS ---
@@ -167,7 +178,9 @@ function configurarFiltros() {
         const resultado = todosLosPedidos.filter(p => {
             const matchId = p.id.toString().toLowerCase().includes(busquedaId);
             const matchProv = busquedaProv === "" || p.proveedorId == busquedaProv;
-            const fechaP = p.fecha.split('T')[0];
+            
+            // Comparar solo la parte de la fecha YYYY-MM-DD
+            const fechaP = p.fecha.split('T')[0]; 
             const matchFecha = busquedaFecha === "" || fechaP === busquedaFecha;
             
             return matchId && matchProv && matchFecha;
@@ -176,14 +189,16 @@ function configurarFiltros() {
         renderizarTabla(resultado);
     };
 
-    inputId.addEventListener('input', filtrar);
-    selectProv.addEventListener('change', filtrar);
-    inputFecha.addEventListener('change', filtrar);
+    if(inputId) inputId.addEventListener('input', filtrar);
+    if(selectProv) selectProv.addEventListener('change', filtrar);
+    if(inputFecha) inputFecha.addEventListener('change', filtrar);
 
-    btnLimpiar.addEventListener('click', () => {
-        inputId.value = '';
-        selectProv.value = '';
-        inputFecha.value = '';
-        renderizarTabla(todosLosPedidos);
-    });
+    if(btnLimpiar) {
+        btnLimpiar.addEventListener('click', () => {
+            inputId.value = '';
+            selectProv.value = '';
+            inputFecha.value = '';
+            renderizarTabla(todosLosPedidos);
+        });
+    }
 }

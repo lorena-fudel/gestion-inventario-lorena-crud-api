@@ -3,24 +3,20 @@
     <h2>Gestión de Inventario y Productos</h2>
     
     <div class="inventory-controls">
-        <!-- Botón para abrir el formulario modal de CRUD -->
-        <button id="btn-abrir-modal-producto" class="btn-primary">➕ Registrar Nuevo Producto</button>
+        <div class="action-buttons" style="display: flex; gap: 10px;">
+            <button id="btn-abrir-modal-producto" class="btn-primary">➕ Registrar Nuevo Producto</button>
+            <button id="btn-abrir-modal-proveedor" class="btn-secondary" style="background-color: #2c3e50; color: white;">🏢 Registrar Proveedor</button>
+        </div>
         
-        <!-- Controles de filtrado y búsqueda -->
         <div class="search-group">
             <input type="text" id="filtro-producto-nombre" placeholder="Buscar por Nombre o SKU">
             <select id="filtro-producto-categoria">
                 <option value="">Todas las Categorías</option>
-                <!-- Opciones de categorías se cargarán con JS -->
             </select>
             <button id="btn-filtrar-inventario" class="btn-secondary">Filtrar</button>
-            <button id="btn-ordenar-precio" class="btn-secondary" style="margin-left: 5px;">
-        ⬆️ Precio
-    </button>
         </div>
     </div>
     
-    <!-- Contenedor principal para el Listado de Productos -->
     <h3>Stock Actual de Productos</h3>
     <table id="tabla-inventario" class="data-table">
         <thead>
@@ -37,23 +33,19 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Los datos de los productos se insertarán aquí con JS (CRUD) -->
-        </tbody>
+            </tbody>
     </table>
 </section>
 
-<!-- MODAL DE GESTIÓN DE PRODUCTOS (Crear, Modificar, Borrar) -->
-<!-- Este modal se activa con el botón "Registrar Nuevo Producto" o al hacer clic en Modificar/Borrar en la tabla. -->
 <div id="producto-modal" class="modal-backdrop" style="display: none;">
     <div class="modal-content large-modal">
-        <span class="close-button">&times;</span>
+        <span class="close-button" id="close-producto">&times;</span>
         <h3 id="modal-title">Registrar Nuevo Producto</h3>
         
         <form id="producto-form">
             <input type="hidden" id="producto-id">
             
             <div class="form-grid">
-                <!-- Columna 1 -->
                 <div class="form-group">
                     <label for="producto-nombre">Nombre del Producto</label>
                     <input type="text" id="producto-nombre" required>
@@ -64,34 +56,31 @@
                 </div>
                 <div class="form-group">
                     <label for="producto-categoria">Categoría</label>
-                    <!-- Usaremos un select para categorías que se llenará con JS -->
                     <select id="producto-categoria" required>
-                        <option value="">Selecciona Categoría</option>
+                        <option value="">Cargando...</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="producto-proveedor">Proveedor Principal</label>
-                    <!-- Usaremos un select para proveedores que se llenará con JS -->
                     <select id="producto-proveedor" required>
-                        <option value="">Selecciona Proveedor</option>
+                        <option value="">Cargando...</option>
                     </select>
                 </div>
 
-                <!-- Columna 2 -->
                 <div class="form-group">
                     <label for="producto-stock">Stock Actual</label>
                     <input type="number" id="producto-stock" required min="0" value="0">
                 </div>
                 <div class="form-group">
-                    <label for="producto-stock-minimo">Stock Mínimo (Alerta)</label>
-                    <input type="number" id="producto-stock-minimo" required min="0" value="10">
+                    <label for="producto-stock-minimo">Stock Mínimo</label>
+                    <input type="number" id="producto-stock-minimo" required min="0" value="5">
                 </div>
                 <div class="form-group">
-                    <label for="producto-precio">Precio Unitario (€)</label>
+                    <label for="producto-precio">Precio (€)</label>
                     <input type="number" id="producto-precio" required min="0" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="producto-unidad-medida">Unidad de Medida (kg, unidad, litro, etc.)</label>
+                    <label for="producto-unidad-medida">Unidad (kg, ud, etc)</label>
                     <input type="text" id="producto-unidad-medida" required>
                 </div>
             </div>
@@ -102,9 +91,39 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" id="btn-guardar-producto" class="btn-success">💾 Guardar Producto</button>
-                <button type="button" id="btn-borrar-producto" class="btn-danger" style="display: none;">🗑️ Borrar Producto</button>
+                <button type="submit" class="btn-success">💾 Guardar Producto</button>
                 <button type="button" id="btn-cancelar-producto" class="btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="proveedor-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content small-modal">
+        <span class="close-button" id="close-proveedor">&times;</span>
+        <h3>Registrar Nuevo Proveedor</h3>
+        
+        <form id="proveedor-form">
+            <div class="form-group">
+                <label for="prov-nombre">Nombre de la Empresa *</label>
+                <input type="text" id="prov-nombre" required placeholder="Ej: Distribuciones S.L.">
+            </div>
+            <div class="form-group">
+                <label for="prov-email">Email de Contacto</label>
+                <input type="email" id="prov-email" placeholder="contacto@empresa.com">
+            </div>
+            <div class="form-group">
+                <label for="prov-telefono">Teléfono</label>
+                <input type="tel" id="prov-telefono" placeholder="+34 600 000 000">
+            </div>
+            <div class="form-group">
+                <label for="prov-direccion">Dirección Física</label>
+                <input type="text" id="prov-direccion" placeholder="Calle Principal, 123">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-success">💾 Guardar Proveedor</button>
+                <button type="button" id="btn-cancelar-proveedor" class="btn-secondary">Cancelar</button>
             </div>
         </form>
     </div>

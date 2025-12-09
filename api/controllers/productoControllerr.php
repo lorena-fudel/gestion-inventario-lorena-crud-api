@@ -182,21 +182,49 @@ function handleProductosRequest($pdo, $method, $id, $data) {
            📌 DELETE → Eliminar producto
         ---------------------------------------------------- */
         case 'DELETE':
-
+            // 1. Validar ID
             if (!$id) {
                 http_response_code(400);
-                echo json_encode(["message" => "ID requerido"]);
+                echo json_encode(["success" => false, "error" => "ID requerido"]);
                 return;
             }
 
-            $stmt = $pdo->prepare("DELETE FROM productos WHERE id = ?");
-            $stmt->execute([$id]);
+            try {
+                // 2. Intentar borrar
+                $stmt = $pdo->prepare("DELETE FROM productos WHERE id = ?");
+                $stmt->execute([$id]);
 
-            echo json_encode([
-                "success" => true,
-                "rows_affected" => $stmt->rowCount()
-            ]);
+                if ($stmt->rowCount() > 0) {
+                    echo json_encode([
+                        "success" => true,
+                        "message" => "Producto eliminado correctamente"
+                    ]);
+                } else {
+                    // El ID no existía, pero no es un error crítico
+                    echo json_encode([
+                        "success" => false,
+                        "error" => "El producto no existe o ya fue borrado"
+                    ]);
+                }
 
+            } catch (\PDOException $e) {
+                // 3. CAPTURAR ERROR DE INTEGRIDAD (Clave Foránea - Código 23000)
+                if ($e->getCode() == '23000') {
+                    http_response_code(409); // Conflict
+                    echo json_encode([
+                        "success" => false, 
+                        // Enviamos el mensaje claro para mostrar en la alerta
+                        "error" => "⛔ NO SE PUEDE BORRAR: Este producto forma parte de pedidos o albaranes antiguos. Elimina primero esos registros."
+                    ]);
+                } else {
+                    // Otro error SQL
+                    http_response_code(500);
+                    echo json_encode([
+                        "success" => false, 
+                        "error" => "Error BD: " . $e->getMessage()
+                    ]);
+                }
+            }
             break;
     }
 }

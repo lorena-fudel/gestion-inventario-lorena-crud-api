@@ -3,16 +3,11 @@ const API_BASE_URL_FILE = 'http://localhost/FuncionesVanillaGestion-inventario-e
 // Función genérica para manejar todas las peticiones de la API
 const _fetchApi = async (resource, method = 'GET', data = null, id = null) => {
     let url = API_BASE_URL_FILE + `?resource=${resource}`;      
-    if (id !== null) {
-        url += `&id=${id}`;
-    }
+    if (id !== null) url += `&id=${id}`;
 
-    
     const options = {
         method: method,
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
     };
 
     if (data && (method === 'POST' || method === 'PUT')) {
@@ -22,34 +17,32 @@ const _fetchApi = async (resource, method = 'GET', data = null, id = null) => {
     try {
         const response = await fetch(url, options);
         
-        // 1. Manejar Respuestas Sin Contenido
-        if (response.status === 204 || response.headers.get('content-length') === '0') {
-            return { success: true, message: "Operación exitosa." };
-        }
-        
-        // 🛑 CAMBIO CLAVE AQUÍ: Leemos como TEXTO primero para ver si es HTML o JSON
+        // Si no hay contenido (204)
+        if (response.status === 204) return { success: true };
+
         const text = await response.text();
         
         try {
-            // Intentamos convertir ese texto a JSON
             const result = JSON.parse(text);
             
+            // SI LA RESPUESTA NO ES OK (ej: 409 o 500), devolvemos el resultado igual
+            // para poder leer el mensaje de "error" en el controlador.
             if (!response.ok) {
-                 console.error(`Error ${response.status} API:`, result.message);
-                 return null; 
+                 console.warn(`API Error ${response.status}:`, result);
+                 // Aseguramos que success sea false
+                 result.success = false; 
+                 return result; 
             }
             return result; 
 
         } catch (jsonError) {
-            // SI FALLA AQUÍ, SIGNIFICA QUE PHP ENVIÓ HTML (EL ERROR REAL)
-            console.error("🔥 EL SERVIDOR PHP RESPONDIÓ CON UN ERROR (NO ES JSON):");
-            console.log(text); // <--- ESTO te mostrará el error exacto de PHP en la consola
-            return null;
+            console.error("Error parseando JSON:", text);
+            return { success: false, error: "Error del servidor (formato inválido)" };
         }
 
     } catch (error) {
-        console.error("Error de red crítico:", error);
-        return null;
+        console.error("Error de red:", error);
+        return { success: false, error: "Error de conexión" };
     }
 };
 
